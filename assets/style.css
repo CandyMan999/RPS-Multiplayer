@@ -1,0 +1,36 @@
+.navbar{
+    background-color: darkcyan;
+}
+
+.title {
+    color: white;
+}
+
+.player{
+   
+    width: fit-content;
+    height: 200px;
+    border: 2px solid darkcyan;
+    margin: 5px;
+}
+
+.gameResult {
+
+    width: 200px;
+    height: 200px;
+    border: 2px solid darkcyan;
+    margin: 5px;
+    
+    
+
+}
+
+.chat{
+    background-color: white;
+    height: 200px;
+    width: 86%;
+    margin-bottom: 10px;
+    margin-top: 25px;
+
+}
+

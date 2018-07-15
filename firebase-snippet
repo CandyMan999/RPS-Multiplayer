@@ -1,0 +1,13 @@
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCaj8KA0yJ_y_7xf4m-oxqaYfNUVVfiykQ",
+    authDomain: "rps-multiplayer-d76a4.firebaseapp.com",
+    databaseURL: "https://rps-multiplayer-d76a4.firebaseio.com",
+    projectId: "rps-multiplayer-d76a4",
+    storageBucket: "rps-multiplayer-d76a4.appspot.com",
+    messagingSenderId: "549801769528"
+  };
+  firebase.initializeApp(config);
+</script>

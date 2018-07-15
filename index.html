@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>RPS-Multiplayer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/style.css" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+</head>
+<body>
+    
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <h1><p class="text-center title">Rock Paper Scissors Multiplayer</p></h1>
+        </div>
+      </nav>
+
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+                <h1 class="text-center">Connected players: <span id="connected"></span></h1>
+            <div class="input-group mb-3">
+                
+                <input id="player-input" type="text" class="form-control" placeholder="Enter your Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button id="ready" class="btn btn-outline-secondary" type="button" id="button-addon2">Ready Player</button>
+                </div>
+            </div>
+            <div class="container main">
+                <div class="row">
+                    <div class="col-md-3 player text-center">
+                        <span id="player1"></span>
+                    </div>
+                
+                    <div class="col-md-4 gameResult">
+                        <span id"gameResult"></span>
+                    </div>
+
+                    <div class="col-md-3 player text-center">
+                        <span id="player2"></span>
+                    </div>
+                
+                </div>
+
+             </div>
+
+             <div class="container">
+                 <div class="row">
+                    <div class="com-md-6 chat">
+                         <span id="text"></span>
+                    </div>
+                 </div>
+             </div>
+            
+
+             <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Talk some trash!" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button id="sendIt" class="btn btn-outline-secondary" type="button" id="button-addon2">Send it!</button>
+                    </div>
+            </div>
+        </div>
+      </div>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="./assets/app.js"></script>
+
+</body>
+</html>
