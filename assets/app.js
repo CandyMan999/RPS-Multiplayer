@@ -13,7 +13,9 @@
 
   var initialUser1 = "Waiting for player 1";
   var initialUser2 = "Waiting for player 2";
-  
+  var whoIsIt;  
+  var wins = 0;
+  var wins = 0;
   
   
   $("#player1").text(initialUser1);
@@ -39,7 +41,15 @@
       var con = connectionsRef.push(true);
 
       //Remove user from the connection list when they disconnect
-      con.onDisconnect().remove();
+      con.onDisconnect().remove() 
+
+      // database.ref("/player1").onDisconnect().set({
+      //   name: initialUser1,
+      // }); 
+
+     
+
+      
 
     }
 
@@ -55,9 +65,24 @@ $("#ready").on('click', function(event) {
     // prevents the page from refreshing  
     event.preventDefault();
     console.log($("#player1").text());
+
+    //this should capture any extra users after them game is full so they don't inturrupt
+    // if ($("#player1").text() != initialUser1 && $("#player2").text() != initialUser2) {
+    //     alert("sorry this game is full");
+
+    //     user1 = $("#player-input").val().trim();
+
+    //     database.ref("/extraPlayer").push({
+    //       name: user1,
+    //     });
+
+    //  }
+
+
     //we are writing an if statement that fills whichever user does not have a value in it other than the default
     if ($("#player1").text() === initialUser1) {
       console.log("we got it")
+      whoIsIt = "player1";
         
           
           // Get inputs
@@ -66,32 +91,70 @@ $("#ready").on('click', function(event) {
 
 
           // Change what is saved in firebase
-          database.ref().push({
-            name: user1,
+          database.ref("/player1").set({
+              name: user1,
+              wins: 0,
+              losses: 0
+              
           });
+
+          database.ref("/player1").onDisconnect().set({
+            name: initialUser1,
+           }); 
+
+          //this clears the input bar after a name is input
+        $("#player-input").val('');
+ 
+       
+    }  //$("#player1").text() != initialUser1 && $("#player2").text() === initialUser2) 
+      else {
+      console.log("we are onto the second player");
+      whoIsIt = "player2";
+        
+          
+          // Get inputs
+          user2 = $("#player-input").val().trim();
+
+
+
+          // Change what is saved in firebase
+          database.ref("/player2").set({
+              name: user2,
+              wins: 0,
+              losses: 0
+              
+          });
+
+          database.ref("/player2").onDisconnect().set({
+            name: initialUser2,
+           }); 
 
           //this clears the input bar after a name is input
         $("#player-input").val('');
 
-       
-    } 
-
-    database.ref().on("child_added", function(snapshot){
-  
-      var sv = snapshot.val();
-      
-      
-      
-      console.log(sv);
-      console.log(sv.name);
-    // appendt the html with the name
-    
-    $("#player1").text(sv.name);
-    
-    });
-    
+}    
+     
 
 });
+
+database.ref().on("value", function(snapshot){
+  
+  var sv = snapshot.val();
+  
+  
+  
+  //console.log(sv);
+  console.log(sv.player1);
+  //console.log(sv.player2);
+// append the html with the name
+
+$("#player1").text(sv.player1.name);
+$("#player2").text(sv.player2.name);
+
+});
+
+
+
 
 
 
