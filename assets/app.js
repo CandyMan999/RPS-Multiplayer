@@ -15,8 +15,42 @@
   var initialUser2 = "Waiting for player 2";
   var whoIsIt;  
   var wins = 0;
-  var wins = 0;
+  var losses = 0;
+  let name; 
+  let choice;
+
+  const gameRules = (myChoice, theirChoice) => {
+
+
+    var options = ["Rock", "Paper", "Scissors"];
   
+    
+  
+    var myIndex = options.indexOf(myChoice);
+    var theirIndex = options.indexOf(theirChoice);
+  
+    let dif = (myIndex - theirIndex);
+  
+    console.log(dif);
+  
+    if (dif === 0) {
+      alert("draw");
+    }
+    else if (dif === 1){
+      alert("win")
+    } else if (dif === 2) {
+      alert('loss')
+    } else if (dif === -2) {
+      alert('win')
+    } else if (dif === -1) {
+      alert('loss')
+    } 
+  
+  
+  }
+  
+
+
   
   $("#player1").text(initialUser1);
   $("#player2").text(initialUser2);
@@ -62,79 +96,73 @@
 
 
 $("#ready").on('click', function(event) {
-    // prevents the page from refreshing  
-    event.preventDefault();
-    console.log($("#player1").text());
+  // prevents the page from refreshing  
+  event.preventDefault();
+  console.log($("#player1").text());
+  name = $("#player-input").val().trim();
+  //this should capture any extra users after them game is full so they don't inturrupt
+  // if ($("#player1").text() != initialUser1 && $("#player2").text() != initialUser2) {
+  //     alert("sorry this game is full");
 
-    //this should capture any extra users after them game is full so they don't inturrupt
-    // if ($("#player1").text() != initialUser1 && $("#player2").text() != initialUser2) {
-    //     alert("sorry this game is full");
+  //     user1 = $("#player-input").val().trim();
 
-    //     user1 = $("#player-input").val().trim();
+  //     database.ref("/extraPlayer").push({
+  //       name: user1,
+  //     });
 
-    //     database.ref("/extraPlayer").push({
-    //       name: user1,
-    //     });
-
-    //  }
-
-
-    //we are writing an if statement that fills whichever user does not have a value in it other than the default
-    if ($("#player1").text() === initialUser1) {
-      console.log("we got it")
-      whoIsIt = "player1";
-        
-          
-          // Get inputs
-          user1 = $("#player-input").val().trim();
+  //  }
 
 
+  //we are writing an if statement that fills whichever user does not have a value in it other than the default
+  if ($("#player1").text() === initialUser1) {
+    console.log("we got it")
+    whoIsIt = "1";
+    database.ref("/player1").onDisconnect().set({
+      name: initialUser1,
+    }); 
+    $("#choices1").html(` <ul>
+    <li id='rock'>Rock</li>
+    <li id='paper'>Paper</li>
+    <li id='scissors'>Scissors</li>
+</ul>`)
+  database.ref("/player2").on("value", function(snapshot){
+    let sv = snapshot.val();
+    if (sv.choice) {
+      $("#choices2").html(sv.choice);
+      gameRules(choice, sv.choice)
+    }
 
-          // Change what is saved in firebase
-          database.ref("/player1").set({
-              name: user1,
-              wins: 0,
-              losses: 0
-              
-          });
+  });
+  } else {
+    console.log("we are onto the second player");
+    whoIsIt = "2";
+    database.ref("/player2").onDisconnect().set({
+      name: initialUser2,
+    }); 
+    
+    database.ref("/player1").on("value", function(snapshot){
+      let sv = snapshot.val();
+      if (sv.choice) {
+        $("#choices2").html(`
+          <ul>
+            <li id='rock'>Rock</li>
+            <li id='paper'>Paper</li>
+            <li id='scissors'>Scissors</li>
+          </ul>`
+        )
+      }
 
-          database.ref("/player1").onDisconnect().set({
-            name: initialUser1,
-           }); 
+    });
 
-          //this clears the input bar after a name is input
-        $("#player-input").val('');
- 
-       
-    }  //$("#player1").text() != initialUser1 && $("#player2").text() === initialUser2) 
-      else {
-      console.log("we are onto the second player");
-      whoIsIt = "player2";
-        
-          
-          // Get inputs
-          user2 = $("#player-input").val().trim();
-
-
-
-          // Change what is saved in firebase
-          database.ref("/player2").set({
-              name: user2,
-              wins: 0,
-              losses: 0
-              
-          });
-
-          database.ref("/player2").onDisconnect().set({
-            name: initialUser2,
-           }); 
-
-          //this clears the input bar after a name is input
-        $("#player-input").val('');
-
-}    
-     
-
+  }  
+  
+  
+  database.ref(`/player${whoIsIt}`).set({
+    name,
+    wins,
+    losses       
+  }); 
+  $("#player-input").val('');
 });
 
 database.ref().on("value", function(snapshot){
@@ -150,11 +178,62 @@ database.ref().on("value", function(snapshot){
 
 $("#player1").text(sv.player1.name);
 $("#player2").text(sv.player2.name);
+$("#win1").text(sv.player1.wins);
+$("#loss1").text(sv.player1.losses);
+$("#win2").text(sv.player2.wins);
+$("#loss2").text(sv.player2.losses);
 
 });
 
 
 
+
+//logic for rock paper scissors
+// switch(yourRPS) {
+//   case 'rock':
+//     switch(opponentRPS) {
+//           case 'rock':
+//               return 'draw';
+//           case 'paper':
+//               return 'lose';
+//           case 'scissors':
+//               return 'win';
+//       }
+//     break;
+//   case 'paper':
+//       switch(opponentRPS) {
+//           case 'rock':
+//               return 'win';
+//           case 'paper':
+//               return 'draw';
+//           case 'scissors':
+//               return 'lose';
+//       }
+//     break;
+//   case 'scissors':
+//       switch(opponentRPS) {
+//           case 'rock':
+//               return 'lose';
+//           case 'paper':
+//               return 'win';
+//           case 'scissors':
+//               return 'draw';
+//       }
+//       break;
+//   }
+
+$(".choices").on('click', 'ul li', function(){
+    choice = $(this).text();
+          // Change what is saved in firebase
+    database.ref(`/player${whoIsIt}`).set({
+      choice,
+      name,
+      wins,
+      losses,     
+    });
+$(`#choices${whoIsIt}`).html(choice);
+
+});
 
 
 
